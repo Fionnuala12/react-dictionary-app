@@ -1,38 +1,24 @@
-import { useState } from 'react'
-import SearchBar from './SearchBar.jsx';
-import WordDetails from './WordDetails.jsx';
-import ErrorMessage from './ErrorMessage.jsx';
+import React from 'react';
+import Dictionary from './components/Dictionary';
 import './App.css'
 
 function App() {
 
-  const [wordData, setWordData] = useState(null); // Store API response
-  const [error, setError] = useState(null); // Store error message
-
-  // Function to get meaning of the word
-  async function fetchWord(word) {
-    setError(null);
-    setWordData(null);
-
-    try {
-      const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-      if (!response.ok) {
-        throw new Error ("Word not found");
-      } 
-      const data = await response.json();
-      setWordData(data[0]);
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-
   return (
-    <div> 
+    <div className="dictionary-app-wrapper"> 
+    <div className="App">
+      <div className="container">
+        <header className='App-header'>
      <h1>My Dicitonary App</h1> 
-     <SearchBar onSearch={fetchWord}/>
-     {error && <ErrorMessage message={error} />}
-     {wordData && <WordDetails data={wordData} />}
+     </header>
+    <main>
+      <Dictionary defaultKeyWord = "sunset"/>
+    </main>
+    <footer>
+      <a href="https://github.com/Fionnuala12/react-dictionary-app">Open-source code</a> by Fionnuala Wilson
+    </footer>
+    </div>
+    </div>
     </div>
   );
 }
